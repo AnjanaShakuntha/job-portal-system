@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class UserController {
@@ -33,4 +34,25 @@ public class UserController {
         userService.registerUser(user);
         return "redirect:/login";
     }
+
+    @GetMapping("/login")
+public String showLoginForm() {
+    return "login";
+}
+
+@PostMapping("/login")
+public String loginUser(@RequestParam String email,
+                        @RequestParam String password,
+                        Model model) {
+
+    if (userService.validateLogin(email, password)) {
+        return "redirect:/dashboard";
+    } else {
+        model.addAttribute("error", "Invalid email or password!");
+        return "login";
+    }
+}
+
+
+
 }

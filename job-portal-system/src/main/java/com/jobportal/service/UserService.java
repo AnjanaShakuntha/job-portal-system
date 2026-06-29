@@ -28,4 +28,13 @@ public class UserService {
     public boolean emailExists(String email) {
         return userRepository.findByEmail(email).isPresent();
     }
+
+    public boolean validateLogin(String email, String password) {
+    Optional<User> user = userRepository.findByEmail(email);
+    if (user.isPresent()) {
+        return user.get().getPassword().equals(password);
+    }
+    return false;
 }
+}
+
