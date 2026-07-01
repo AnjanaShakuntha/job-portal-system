@@ -77,4 +77,11 @@ public String showDashboard(HttpSession session, Model model) {
 }
 
 
+@GetMapping("/logout")
+public String logout(HttpSession session) {
+    session.invalidate();
+    return "redirect:/login";
+}
+
+
 }
